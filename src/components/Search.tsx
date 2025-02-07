@@ -1,6 +1,73 @@
 import React, { useState } from "react";
 import { getProducts } from "../services/productService";
 import { Product } from "../interfaces/index" // importando tipagem
+import styled from "styled-components";
+
+const SearchContainer = styled.div`
+  width: 100%;
+  max-width: 800px;
+  margin-top: 20px;
+  color: #fff; 
+`;
+
+
+const SearchInput = styled.input`
+  padding: 12px;
+  border: 2px solid #444;
+  border-radius: 8px;
+  background-color: #222;
+  color: white;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #44d62c; 
+  }
+`;
+
+const SearchButton = styled.button`
+  background-color: #44d62c; 
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #369d22; // Tom de verde mais escuro ao passar o mouse
+  }
+`;
+
+const SearchTitle = styled.h2`
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #44d62c; // Verde
+`;
+
+const ProductList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  color: #fff; // Texto branco para contraste
+`;
+
+const ProductItem = styled.li`
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 8px;
+`;
+
+const ProductDetails = styled.div`
+  margin-bottom: 10px;
+`;
 
 const Search: React.FC = () => {
     // criando os estados do componente
@@ -35,31 +102,34 @@ const Search: React.FC = () => {
     };
 
     return(
-    <div>
-        <h2>Campo de Pesquisa: </h2> 
-        <input type="text" 
-            value={searchTerm} 
-            onChange={(e) => {
-                setSearchTerm(e.target.value);  // atualiza o termo de busca conforme o usuário digita
-                filterProducts(products);  // aplica o filtro enquanto o usuário digita
-            }}  
-            placeholder="Buscar por nome, descrição, preço ou categoria..."
-        /> 
-        <button onClick={handleSearch}>Pesquisar</button>
-        <h3>Resultado: </h3>
-        <ul>
-            {filteredProducts.map((product) => (// percorre a lista de produtos filtrados e renderiza cada item na tela
-                <li style={{marginBottom:'5px'}} key={product.id}>
-                    <strong>ID: {product.id}</strong> <br /> 
-                    Produto: {product.title} - ${product.price} <br />
-                    Categoria: {product.category} <br/>
-                    Descrição: {product.description}<hr />
-                </li>
-                
-            ))}
-        </ul>
-    </div>
+        <SearchContainer>
+        <SearchTitle>Campo de Pesquisa</SearchTitle>
+        <SearchInput
+          type="text"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value); // atualiza o termo de busca conforme o usuário digita
+            filterProducts(products);  // aplica o filtro enquanto o usuário digita
+          }}
+          placeholder="Buscar por ID, nome, descrição, preço ou categoria..."
+        />
+        <SearchButton onClick={handleSearch}>Pesquisar</SearchButton>
+        <h3>Resultado:</h3>
+        <ProductList>
+          {filteredProducts.map((product) => ( // percorre a lista de produtos filtrados e renderiza cada item na tela
+            <ProductItem key={product.id}>
+              <ProductDetails>
+                <strong>ID: {product.id}</strong> <br />
+                Produto: {product.title} - ${product.price} <br />
+                Categoria: {product.category} <br />
+                Descrição: {product.description}
+              </ProductDetails>
+              <hr />
+            </ProductItem>
+          ))}
+        </ProductList>
+      </SearchContainer>
     );
-}
+  };
 
 export default Search;

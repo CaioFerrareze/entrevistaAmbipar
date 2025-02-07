@@ -17,37 +17,48 @@ const ModalOverlay = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
-const ModalContent= styled.div`
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    min-width: 300px;
+    z-index: 1000; 
+    transition: opacity 0.3s ease;
+    opacity: ${(props: { isOpen: boolean }) => (props.isOpen ? 1 : 0)};
+    visibility: ${(props: { isOpen: boolean }) => (props.isOpen ? "visible" : "hidden")};
+`;
+
+const ModalContent = styled.div`
+    background: #2c2c2c;
+    padding: 30px;
+    border-radius: 12px;
+    min-width: 320px;
+    max-width: 500px;
     position: relative;
-`
-const ModalButton= styled.button`
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+    transform: ${(props: { isOpen: boolean }) => props.isOpen ? "scale(1)" : "scale(0.7)"};
+`;
+
+const ModalButton = styled.button`
     position: absolute;
     top: 10px;
     right: 10px;
     border: none;
     border-radius: 5px;
-    background: #ff7c7c;
-    color: white;
-    padding: 5px 10px;
+    background: #abfd9e;
+    color: #858585;
+    padding: 8px 15px;
     cursor: pointer;
-    &:hover{
-        background: #ff0000;
-    }
-`
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 
+    &:hover {
+        background: #44d62c;
+        color: #fff;
+    }
+`;
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
-    if (!isOpen) return null;
-
     return (
-        <ModalOverlay>
-            <ModalContent>
-                <ModalButton className="modal-close" onClick={onClose}>X</ModalButton>
+        <ModalOverlay isOpen={isOpen} onClick={onClose}>
+            <ModalContent isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
+                <ModalButton onClick={onClose}>X</ModalButton>
                 {children}
             </ModalContent>
         </ModalOverlay>
