@@ -1,4 +1,4 @@
-const BASE_URL = "https://dummyjson.com/products"; // URL básica para fazer as chamadas
+const BASE_URL = "https://dummyjson.com/products"; // url básica para fazer as chamadas
 
 // a getProducts faz uma requisição get e aguarda a resposta retornando os produtos em formato JSON
 export const getProducts = async () => {
