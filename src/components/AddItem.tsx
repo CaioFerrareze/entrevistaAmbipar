@@ -21,8 +21,7 @@ export const AddItem: React.FC = () => {
     const closeModal = () => setIsModalOpen(false);
 
     const handleSubmit = async (e: React.FormEvent) => { // fnct que chama método post após usuário preencher campos
-        e.preventDefault();
-
+        e.preventDefault(); // evita a página recarregar após envio do formulário
         if (!title || !price || !category) {
             setMessage("Todos os campos são obrigatórios!");
             return;

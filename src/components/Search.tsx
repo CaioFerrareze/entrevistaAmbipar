@@ -25,6 +25,7 @@ const Search: React.FC = () => {
 
     const filterProducts = (data: Product[]) => { // filtra os produtos 
         const filtered = data.filter((product) => 
+            product.id.toString().includes(searchTerm) || // ID
             product.title.toLowerCase().includes(searchTerm.toLowerCase()) || // nome
             product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||// descrição
             product.category.toLowerCase().includes(searchTerm.toLowerCase()) || // categoria
@@ -48,11 +49,13 @@ const Search: React.FC = () => {
         <h3>Resultado: </h3>
         <ul>
             {filteredProducts.map((product) => (// percorre a lista de produtos filtrados e renderiza cada item na tela
-                <li key={product.id}>
-                    {product.title} - ${product.price} <br />
+                <li style={{marginBottom:'5px'}} key={product.id}>
+                    <strong>ID: {product.id}</strong> <br /> 
+                    Produto: {product.title} - ${product.price} <br />
                     Categoria: {product.category} <br/>
-                    Descrição: {product.description}
+                    Descrição: {product.description}<hr />
                 </li>
+                
             ))}
         </ul>
     </div>
